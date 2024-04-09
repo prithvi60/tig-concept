@@ -6,11 +6,19 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      sm: "375px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1440px",
+      "2xl": "1535px",
+      "3xl": "1920px",
+    },
     extend: {
-     fontFamily:{
-      SpaceGrotesk: ['spaceGrotesk', 'sans-serif'],
-      // LSFont : ['var(--LSFont)']
-     }
+      fontFamily: {
+        SpaceGrotesk: ["spaceGrotesk", "sans-serif"],
+        // LSFont : ['var(--LSFont)']
+      },
     },
   },
   plugins: [],

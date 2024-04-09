@@ -1,8 +1,6 @@
 import { Space_Grotesk } from "next/font/google";
 import local from "next/font/local";
 import "./globals.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
