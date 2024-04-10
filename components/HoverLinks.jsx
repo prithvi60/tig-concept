@@ -92,7 +92,7 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
           whileHover: { scale: 1, rotate: "12.5deg" },
         }}
         transition={{ type: "spring" }}
-        src={imgSrc}
+        src={"/hover.png"}
         className="absolute !z-50 object-cover w-20 h-20 rounded-lg md:h-28 md:w-32"
         alt={`Image representing a link for ${heading}`}
       />

@@ -13,10 +13,13 @@ const Disc = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progressValue, setProgressValue] = useState(0);
   const [mute, setMute] = useState(true);
-  const [play] = useSound("https://ik.imagekit.io/webibee/tig-intro.mp3", {
-    volume: 0.2,
-    soundEnabled: mute,
-  });
+  const [play, { stop }] = useSound(
+    "https://ik.imagekit.io/webibee/tig-intro.mp3",
+    {
+      volume: 0.04,
+      loop: true,
+    }
+  );
 
   const discVariants = {
     hidden: {
@@ -59,23 +62,29 @@ const Disc = () => {
   };
 
   const handleClick = () => {
-    play();
+    setMute(false);
     setBgSound(true);
   };
 
   const handleClickForMute = () => {
-    setMute(false);
+    setMute(true);
     setBgSound(true);
   };
-  // console.log(currentSlide);
 
   useEffect(() => {
     if (bgSound === true) {
       let intervalId1 = setInterval(() => {
-        setCurrentSlide(
-          (prevTabIndex) => (prevTabIndex + 1) % companies.length
-        ); // Update tabIndex cyclically
-      }, 5000);
+        if (progressValue < 100) {
+          setProgressValue((o) => o + 20);
+        } else {
+          setProgressValue(0);
+        }
+        progressValue === 100 &&
+          setCurrentSlide(
+            (prevTabIndex) => (prevTabIndex + 1) % companies.length
+          );
+        // console.log("progress", progressValue);
+      }, 1000);
 
       let value = companies[currentSlide].title;
       const sortedBy = companyLists.filter((val) =>
@@ -86,12 +95,14 @@ const Disc = () => {
       return () => clearInterval(intervalId1); // Cleanup function to prevent memory leaks
     }
   }, [currentSlide, bgSound, data, progressValue]);
-  // console.log(progressValue);
 
-  //   useEffect(()=>{
-  // console.log("handle mute",mute)
-  // play({forceSoundEnabled:mute})
-  //   },[mute, play])
+  useEffect(() => {
+    if (mute) {
+      stop();
+    } else {
+      play();
+    }
+  }, [mute, play, stop]);
 
   return (
     <section className="relative z-20 flex flex-col items-center justify-center w-full h-screen space-y-3 overflow-hidden md:gap-6 xl:gap-14">
@@ -116,7 +127,7 @@ const Disc = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ y: -150, opacity: 0, transition: { duration: 1 } }}
           transition={{ duration: 1, ease: "backInOut" }}
-          className={`h-auto tracking-wide text-red-400 capitalize font-SpaceGrotesk text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer ${
+          className={`h-auto tracking-wide text-red-600 capitalize font-SpaceGrotesk text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer ${
             !bgSound ? "block" : "hidden"
           }`}
         >
@@ -150,48 +161,8 @@ const Disc = () => {
             alt="rotating_disc_svg"
             className="object-contain"
           />
-
-          {/* <motion.button
-            onClick={handleClick}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.8 }}
-            className="absolute p-2 bg-black rounded-full top-[150px] left-[152px] animate-pulse"
-          >
-            <Image
-              src={"/play-svgrepo-com.svg"}
-              alt="play button"
-              height={32}
-              width={32}
-              className="cursor-pointer opacity-60 hover:opacity-100 hover:animate-pulse"
-            />
-          </motion.button> */}
         </motion.div>
-        {/* <motion.div
-          layout
-          animate={bgSound === true && { y: -280 }}
-          transition={
-            bgSound === true && {
-              // repeat: Infinity,
-              duration: 1,
-              // delay: 0.5,
-              ease: "easeInOut",
-            }
-          }
-          className="bg-slate-200 w-[350px] h-[350px] flex justify-center items-center rounded-full shadow-lg shadow-white/20 overflow-hidden"
-        >
-
-          <motion.button
-            onClick={handleClick}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.8 }}
-            className="flex items-center justify-center w-40 h-40 text-lg font-semibold text-white rounded-full shadow-md font-SpaceGrotesk bg-slate-700 shadow-black"
-          >
-            Let&apos;s Rock 🎸
-          </motion.button>
-
-        </motion.div> */}
       </motion.div>
-
       {/* Play Button */}
       <AnimatePresence mode="popLayout">
         <motion.h3
@@ -221,7 +192,7 @@ const Disc = () => {
           /
           <span>
             <button
-              className="mx-1 text-red-700 line-through hover:animate-pulse"
+              className="mx-1 text-red-600 line-through hover:animate-pulse"
               onClick={handleClickForMute}
             >
               Without
@@ -235,11 +206,9 @@ const Disc = () => {
         <BackgroundSlider
           setMute={setMute}
           mute={mute}
-          play={play}
-          setData={setData}
           data={data}
           currentSlide={currentSlide}
-          setCurrentSlide={setCurrentSlide}
+          progressValue={progressValue}
         />
       )}
     </section>
