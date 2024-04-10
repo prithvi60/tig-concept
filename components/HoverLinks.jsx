@@ -1,6 +1,12 @@
 "use client";
-import { useMotionValue, motion, useSpring, useTransform } from "framer-motion";
-import React, { useRef } from "react";
+import {
+  useMotionValue,
+  motion,
+  useSpring,
+  useTransform,
+  useAnimate,
+} from "framer-motion";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import useSound from "use-sound";
 
@@ -8,6 +14,7 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
   const [play] = useSound("https://ik.imagekit.io/webibee/click-sound.mp3", {
     volume: 0.06,
   });
+  const [scope, animate] = useAnimate();
   const ref = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -18,27 +25,58 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
   const top = useTransform(mouseYSpring, [0.5, -0.5], ["0%", "0%"]);
   const left = useTransform(mouseXSpring, [0.5, -0.5], ["-40%", "-40%"]);
 
-  //   const handleMouseMove = (e) => {
-  //     const rect = ref.current.getBoundingClientRect();
+  const handleMouseMove = (e) => {
+    const rect = ref.current.getBoundingClientRect();
 
-  //     const width = rect.width;
-  //     const height = rect.height;
+    const width = rect.width;
+    const height = rect.height;
 
-  //     const mouseX = e.clientX - rect.left;
-  //     const mouseY = e.clientY - rect.top;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-  //     const xPct = mouseX / width - 0.5;
-  //     const yPct = mouseY / height - 0.5;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
 
-  //     x.set(xPct);
-  //     y.set(yPct);
-  //   };
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  useEffect(() => {
+    // async () => {
+    if (currentSlide === list.id - 1) {
+      // await animate(
+      //   "#initialTarget",
+      //   { x: -16 },
+      //   { type: "spring" },
+      //   { staggerChildren: 0.075 },
+      //   { delayChildren: 0.25 }
+      // );
+      // await animate("#finalTarget", { x: 16 }, { type: "spring" });
+      animate(
+        "#initialTarget",
+        { opacity: 1 },
+        { x: -16 },
+        { duration: 1 },
+        { type: "spring" },
+        { staggerChildren: 0.075 },
+       { delayChildren: 0.25 }
+      );
+      animate(
+        "#finalTarget",
+        { opacity: 1 },
+        { x: 16 },
+        { duration: 1 },
+        { type: "spring" }
+      );
+    }
+    // };
+  }, [animate, currentSlide, list]);
 
   return (
     <motion.a
       href={href}
       ref={ref}
-      //   onMouseMove={handleMouseMove}
+      onMouseMove={handleMouseMove}
       initial="initial"
       whileHover="whileHover"
       className={`relative flex items-center justify-between p-2 md:py-2 transition-colors duration-500 border-b-2 group border-neutral-700 hover:border-red-500 w-max md:w-full ${
@@ -46,8 +84,9 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
       }`}
       onClick={() => play()}
     >
-      <div>
+      <div ref={scope}>
         <motion.span
+          id="initialTarget"
           variants={{
             initial: { x: 0 },
             whileHover: { x: -16 },
@@ -64,6 +103,7 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
         >
           {heading.split("").map((l, i) => (
             <motion.span
+              id="finalTarget"
               variants={{
                 initial: { x: 0 },
                 whileHover: { x: 16 },
