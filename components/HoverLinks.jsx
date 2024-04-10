@@ -2,11 +2,13 @@
 import { useMotionValue, motion, useSpring, useTransform } from "framer-motion";
 import React, { useRef } from "react";
 import Image from "next/image";
-
+import useSound from "use-sound";
 
 export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
+  const [play] = useSound("https://ik.imagekit.io/webibee/click-sound.mp3", {
+    volume: 0.06,
+  });
   const ref = useRef(null);
-
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -14,35 +16,35 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
   const mouseYSpring = useSpring(y);
 
   const top = useTransform(mouseYSpring, [0.5, -0.5], ["0%", "0%"]);
-  const left = useTransform(mouseXSpring, [0.5, -0.5], ["-20%", "-20%"]);
+  const left = useTransform(mouseXSpring, [0.5, -0.5], ["-40%", "-40%"]);
 
-//   const handleMouseMove = (e) => {
-//     const rect = ref.current.getBoundingClientRect();
+  //   const handleMouseMove = (e) => {
+  //     const rect = ref.current.getBoundingClientRect();
 
-//     const width = rect.width;
-//     const height = rect.height;
+  //     const width = rect.width;
+  //     const height = rect.height;
 
-//     const mouseX = e.clientX - rect.left;
-//     const mouseY = e.clientY - rect.top;
+  //     const mouseX = e.clientX - rect.left;
+  //     const mouseY = e.clientY - rect.top;
 
-//     const xPct = mouseX / width - 0.5;
-//     const yPct = mouseY / height - 0.5;
+  //     const xPct = mouseX / width - 0.5;
+  //     const yPct = mouseY / height - 0.5;
 
-//     x.set(xPct);
-//     y.set(yPct);
-//   };
+  //     x.set(xPct);
+  //     y.set(yPct);
+  //   };
 
   return (
     <motion.a
       href={href}
       ref={ref}
-    //   onMouseMove={handleMouseMove}
+      //   onMouseMove={handleMouseMove}
       initial="initial"
       whileHover="whileHover"
-        className={`relative flex items-center justify-between py-2 transition-colors duration-500 border-b-2 group border-neutral-700 hover:border-neutral-50 w-100% ${
-          currentSlide === list.id - 1 && "border-neutral-50"
-        }`}
-    //   className="relative flex items-center justify-between py-2 transition-colors duration-500 border-b-2 group border-neutral-700 hover:border-neutral-50"
+      className={`relative flex items-center justify-between p-2 md:py-2 transition-colors duration-500 border-b-2 group border-neutral-700 hover:border-red-500 w-max md:w-full ${
+        currentSlide === list.id - 1 ? "!border-red-500" : ""
+      }`}
+      onClick={() => play()}
     >
       <div>
         <motion.span
@@ -55,11 +57,10 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
             staggerChildren: 0.075,
             delayChildren: 0.25,
           }}
-
-            className={`relative z-10 block text-xl font-bold transition-colors duration-500 text-neutral-500 group-hover:text-neutral-50 md:text-3xl ${
-              currentSlide === list.id - 1 && "text-neutral-50"
-            }`}
-        //   className="relative z-10 block text-xl font-bold transition-colors duration-500 text-neutral-500 group-hover:text-neutral-50 md:text-3xl"
+          className={`relative z-10 block text-xl font-bold transition-colors duration-500 text-neutral-500 group-hover:text-neutral-50 md:text-3xl ${
+            currentSlide === list.id - 1 ? "!text-white" : ""
+          }`}
+          //   className="relative z-10 block text-xl font-bold transition-colors duration-500 text-neutral-500 group-hover:text-neutral-50 md:text-3xl"
         >
           {heading.split("").map((l, i) => (
             <motion.span
@@ -109,7 +110,7 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
           },
         }}
         transition={{ type: "spring" }}
-        className="relative z-10 p-2"
+        className="relative z-10 hidden p-2 md:block"
       >
         {/* <FiArrowRight className="text-5xl text-neutral-50" /> */}
         <Image
@@ -117,10 +118,7 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
           alt="arrow"
           height={36}
           width={36}
-          className={`cursor-pointer opacity-60 hover:opacity-100 animate-bounce ${
-            currentSlide === list.id - 1 ? "block" : "hidden"
-          }`}
-        //   className={`cursor-pointer opacity-60 hover:opacity-100 hover:animate-bounce`}
+          className={`cursor-pointer opacity-60 hover:opacity-100 group-hover:animate-bounce block rotate-180 transition-all duration-700 ease-in-out`}
         />
       </motion.div>
     </motion.a>

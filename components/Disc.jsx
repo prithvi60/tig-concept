@@ -7,6 +7,7 @@ import { useState } from "react";
 import { BackgroundSlider } from "./BackgroundSlider";
 import { companies, companyLists } from "@/libs/data";
 import { BubbleText } from "./BubbleText";
+import { RotatingDisc } from "./RotatingDisc";
 const Disc = () => {
   const [bgSound, setBgSound] = useState(false);
   const [data, setData] = useState(companyLists[0]);
@@ -20,46 +21,6 @@ const Disc = () => {
       loop: true,
     }
   );
-
-  const discVariants = {
-    hidden: {
-      y: 300,
-      scale: 0.3,
-      opacity: 0,
-    },
-    animate: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 2,
-        delay: 0.5,
-        ease: "circInOut",
-      },
-    },
-    exit: {
-      y: -240,
-      scale: 1,
-      opacity: 1,
-      rotate: "360deg",
-      transition: bgSound === true && {
-        duration: 2.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const discAfterPlayVariant = {
-    animate: {
-      rotate: "360deg",
-      transition: {
-        repeat: Infinity,
-        duration: 2.5,
-        ease: "easeOut",
-      },
-    },
-    exit: { y: 0 },
-  };
 
   const handleClick = () => {
     setMute(false);
@@ -107,19 +68,25 @@ const Disc = () => {
   return (
     <section className="relative z-20 flex flex-col items-center justify-center w-full h-screen space-y-3 overflow-hidden md:gap-6 xl:gap-14">
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2, delay: 0.5 }}
+        initial={{ opacity: 0, x: -600 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 3, delay: 1.5 }}
         className={`fixed top-0 w-full h-screen overflow-hidden -z-10 ${
           bgSound ? "block" : "hidden"
         }`}
       >
-        <Image
-          fill
-          src={data.img}
-          alt="rotating_disc_svg"
-          className="object-cover object-center"
-        />
+        <AnimatePresence>
+          <motion.img
+            key={data.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 2, delay: 0.5,ease:"easeInOut" } }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            src={data.img}
+            alt="rotating_disc_svg"
+            className="object-cover object-center w-full h-full"
+          />
+        </AnimatePresence>
       </motion.div>
       <AnimatePresence mode="popLayout">
         <motion.h1
@@ -135,34 +102,7 @@ const Disc = () => {
         </motion.h1>
       </AnimatePresence>
       {/* Disc Svg Component */}
-      <motion.div
-        layout
-        variants={discVariants}
-        initial={"hidden"}
-        animate="animate"
-        exit={"exit"}
-        className={`w-full h-[50vh] flex items-center justify-center ${
-          bgSound ? "fixed top-20" : "top-0"
-        }`}
-      >
-        <motion.div
-          layout
-          variants={discAfterPlayVariant}
-          animate={"animate"}
-          className={`w-[300px] h-[300px] md:w-[350px] md:h-[350px] xl:w-[450px] xl:h-[450px] overflow-hidden absolute ${
-            bgSound && "-top-[245px] md:-top-[270px] xl:-top-[320px]"
-          }
-            `}
-        >
-          <Image
-            fill
-            priority
-            src={"/disc1.png"}
-            alt="rotating_disc_svg"
-            className="object-contain"
-          />
-        </motion.div>
-      </motion.div>
+      <RotatingDisc bgSound={bgSound} />
       {/* Play Button */}
       <AnimatePresence mode="popLayout">
         <motion.h3
