@@ -2,12 +2,12 @@
 const nextConfig = {
     images: {
         unoptimized: true,
-        // remotePatterns: [
-        //   {
-        //     protocol: "https",
-        //     hostname: "ik.imagekit.io",
-        //   },
-        // ],
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "ik.imagekit.io",
+          },
+        ],
       }
 };
 

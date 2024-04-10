@@ -12,7 +12,7 @@ const Disc = () => {
   const [data, setData] = useState(companyLists[0]);
   const [mute, setMute] = useState(true);
   const [play] = useSound("https://ik.imagekit.io/webibee/tig-intro.mp3", {
-    volume: 0.5,
+    volume: 0.2,
     soundEnabled: mute,
   });
 
@@ -66,7 +66,10 @@ const Disc = () => {
     setBgSound(true);
   };
 
-  // useEffect(()=>{},[data])
+  useEffect(()=>{
+console.log("handle mute",mute)
+play({forceSoundEnabled:mute})
+  },[mute, play])
 
   return (
     <section className="relative z-20 flex flex-col items-center justify-center w-full h-screen space-y-3 overflow-hidden md:gap-6 xl:gap-14">

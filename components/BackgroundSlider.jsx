@@ -14,12 +14,15 @@ export const BackgroundSlider = ({ setMute, mute, play, setData, data }) => {
   //   setPauseable(false);
   // };
   const handleMute = () => {
-    setMute(!mute);
+    console.log("mute",mute)
+    setMute(false);
     // setPauseable(true);
   };
   const handleUnMute = () => {
-    setMute(!mute);
-    mute === true && play();
+    console.log("unmute",mute)
+
+    setMute(true);
+    // mute === true && play();
     // setPauseable(false);
   };
 
@@ -89,7 +92,7 @@ export const BackgroundSlider = ({ setMute, mute, play, setData, data }) => {
             alt="pause button"
             height={30}
             width={30}
-            onClick={handleMute}
+            onClick={handleUnMute}
             className="cursor-pointer opacity-60 hover:opacity-100 hover:animate-pulse"
           />
         ) : (
@@ -98,7 +101,7 @@ export const BackgroundSlider = ({ setMute, mute, play, setData, data }) => {
             alt="play button"
             height={30}
             width={30}
-            onClick={handleUnMute}
+            onClick={handleMute}
             className="cursor-pointer opacity-60 hover:opacity-100 hover:animate-pulse"
           />
         )}
