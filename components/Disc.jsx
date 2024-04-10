@@ -5,11 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import useSound from "use-sound";
 import { useState } from "react";
 import { BackgroundSlider } from "./BackgroundSlider";
-import { companyLists } from "@/libs/data";
+import { companies, companyLists } from "@/libs/data";
 import { BubbleText } from "./BubbleText";
 const Disc = () => {
   const [bgSound, setBgSound] = useState(false);
   const [data, setData] = useState(companyLists[0]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [progressValue, setProgressValue] = useState(0);
   const [mute, setMute] = useState(true);
   const [play] = useSound("https://ik.imagekit.io/webibee/tig-intro.mp3", {
     volume: 0.2,
@@ -65,11 +67,31 @@ const Disc = () => {
     setMute(false);
     setBgSound(true);
   };
+  // console.log(currentSlide);
 
-  useEffect(()=>{
-console.log("handle mute",mute)
-play({forceSoundEnabled:mute})
-  },[mute, play])
+  useEffect(() => {
+    if (bgSound === true) {
+      let intervalId1 = setInterval(() => {
+        setCurrentSlide(
+          (prevTabIndex) => (prevTabIndex + 1) % companies.length
+        ); // Update tabIndex cyclically
+      }, 5000);
+
+      let value = companies[currentSlide].title;
+      const sortedBy = companyLists.filter((val) =>
+        val.companyName.includes(value)
+      );
+      setData(sortedBy[0]); // We are currently in the process of filtering the data obtained from the companyList data.
+
+      return () => clearInterval(intervalId1); // Cleanup function to prevent memory leaks
+    }
+  }, [currentSlide, bgSound, data, progressValue]);
+  // console.log(progressValue);
+
+  //   useEffect(()=>{
+  // console.log("handle mute",mute)
+  // play({forceSoundEnabled:mute})
+  //   },[mute, play])
 
   return (
     <section className="relative z-20 flex flex-col items-center justify-center w-full h-screen space-y-3 overflow-hidden md:gap-6 xl:gap-14">
@@ -94,11 +116,11 @@ play({forceSoundEnabled:mute})
           animate={{ opacity: 1, y: 0 }}
           exit={{ y: -150, opacity: 0, transition: { duration: 1 } }}
           transition={{ duration: 1, ease: "backInOut" }}
-          className={`h-auto tracking-wide text-red-400 capitalize font-SpaceGrotesk text-2xl md:text-4xl xl:text-6xl text-center ${
+          className={`h-auto tracking-wide text-red-400 capitalize font-SpaceGrotesk text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer ${
             !bgSound ? "block" : "hidden"
           }`}
         >
-        <BubbleText/>
+          <BubbleText value={"The Internet Generation"} />
         </motion.h1>
       </AnimatePresence>
       {/* Disc Svg Component */}
@@ -205,7 +227,7 @@ play({forceSoundEnabled:mute})
               Without
             </button>
           </span>{" "}
-           music
+          music
         </motion.h3>
       </AnimatePresence>
       {/* background slider will be triggered, after disc play button is clicked*/}
@@ -216,6 +238,8 @@ play({forceSoundEnabled:mute})
           play={play}
           setData={setData}
           data={data}
+          currentSlide={currentSlide}
+          setCurrentSlide={setCurrentSlide}
         />
       )}
     </section>

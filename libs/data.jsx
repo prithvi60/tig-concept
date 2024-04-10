@@ -1,4 +1,12 @@
-export const companies = ["tigital", "tigx", "tigpods", "ticreators", "tigom"];
+// export const companies = ["tigital", "tigx", "tigpods", "ticreators", "tigom"];
+
+export const companies = [
+  { id: 1, title: "tigital", hoverImg: "/bg 1.png", href: "#" },
+  { id: 2, title: "tigx", hoverImg: "/bg 2.png", href: "#" },
+  { id: 3, title: "tigpods", hoverImg: "/bg 3.png", href: "#" },
+  { id: 4, title: "ticreators", hoverImg: "/bg 1.png", href: "#" },
+  { id: 5, title: "tigom", hoverImg: "/bg 3.png", href: "#" },
+];
 
 export const companyLists = [
   {
