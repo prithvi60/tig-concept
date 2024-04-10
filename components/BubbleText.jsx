@@ -2,12 +2,12 @@ import React from 'react'
 
 export const BubbleText = ({value}) => {
   return (
-    <h2 className="text-5xl text-center text-white font-SpaceGrotesk">
+    <div className="text-5xl text-center font-thin text-white h-20">
       {`${value}`.split("").map((child, idx) => (
-        <span className="hoverText" key={idx}>
+        <span className={"hoverText cursor-wait"} key={idx}>
           {child}
         </span>
       ))}
-    </h2>
+    </div>
   )
 }
