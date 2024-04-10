@@ -124,7 +124,7 @@ play({forceSoundEnabled:mute})
           <Image
             fill
             priority
-            src={"/disc.png"}
+            src={"/disc1.png"}
             alt="rotating_disc_svg"
             className="object-contain"
           />
