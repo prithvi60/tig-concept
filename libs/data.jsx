@@ -1,11 +1,24 @@
-// export const companies = ["tigital", "tigx", "tigpods", "ticreators", "tigom"];
-
 export const companies = [
-  { id: 1, title: "TiGital", hoverImg: "/bg 1.png", href: "#" },
-  { id: 2, title: "TigX", hoverImg: "/bg 2.png", href: "#" },
-  { id: 3, title: "TigPods", hoverImg: "/bg 3.png", href: "#" },
-  { id: 4, title: "CreatorsUnion", hoverImg: "/bg 1.png", href: "#" },
-  { id: 5, title: "TigOm", hoverImg: "/bg 3.png", href: "#" },
+  {
+    id: 1,
+    title: "TiGital",
+    hoverImg: "/bg 1.png",
+    href: "https://webibee.com",
+  },
+  { id: 2, title: "TigX", hoverImg: "/bg 2.png", href: "https://webibee.com" },
+  {
+    id: 3,
+    title: "TigPods",
+    hoverImg: "/bg 3.png",
+    href: "https://webibee.com",
+  },
+  {
+    id: 4,
+    title: "CreatorsUnion",
+    hoverImg: "/bg 1.png",
+    href: "https://webibee.com",
+  },
+  { id: 5, title: "TigOm", hoverImg: "/bg 3.png", href: "https://webibee.com" },
 ];
 
 export const companyLists = [

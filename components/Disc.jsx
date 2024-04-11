@@ -94,7 +94,7 @@ const Disc = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ y: -150, opacity: 0, transition: { duration: 1 } }}
           transition={{ duration: 1, ease: "backInOut" }}
-          className={`h-auto tracking-wide text-red-600 capitalize font-SpaceGrotesk text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer ${
+          className={`h-auto tracking-wide text-red-600 capitalize font-tiltNeon text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer ${
             !bgSound ? "block" : "hidden"
           }`}
         >
@@ -116,14 +116,14 @@ const Disc = () => {
             opacity: 0,
             transition: { duration: 1, delay: 0.5 },
           }}
-          className={`text-base lg:text-xl xl:text-2xl text-white capitalize font-SpaceGrotesk ${
+          className={`text-base lg:text-2xl xl:text-4xl text-white capitalize font-belanosima border-2 border-red-600 px-5 py-2 rounded-xl animate-pulse ${
             !bgSound ? "block" : "hidden"
           }`}
         >
           Play{" "}
           <span>
             <button
-              className="mx-1 text-green-700 hover:animate-pulse"
+              className="mx-1.5 md:mx-2.5 font-extrabold text-white hover:animate-pulse"
               onClick={handleClick}
             >
               With{" "}
@@ -132,7 +132,7 @@ const Disc = () => {
           /
           <span>
             <button
-              className="mx-1 text-red-600 line-through hover:animate-pulse"
+              className="mx-1.5 md:mx-2.5 font-extrabold text-red-600 hover:animate-pulse"
               onClick={handleClickForMute}
             >
               Without

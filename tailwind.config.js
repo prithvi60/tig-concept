@@ -16,8 +16,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        SpaceGrotesk: ["spaceGrotesk", "sans-serif"],
-        // LSFont : ['var(--LSFont)']
+        tiltNeon: ["tiltNeon", "sans-serif"],
+        belanosima: ["belanosima", "sans-serif"],
       },
     },
   },

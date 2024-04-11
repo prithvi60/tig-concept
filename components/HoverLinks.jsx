@@ -76,8 +76,8 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
       onMouseMove={handleMouseMove}
       initial="initial"
       whileHover="whileHover"
-      className={`relative flex items-center justify-between p-2 md:py-2 transition-colors duration-500 border-b-2 group border-neutral-700 hover:border-red-500 w-max md:w-full ${
-        currentSlide === list.id - 1 ? "!border-red-500" : ""
+      className={`relative flex items-center justify-between p-2 md:py-2 transition-colors duration-500 border-b-2 group border-neutral-700 hover:border-red-600 w-max md:w-full ${
+        currentSlide === list.id - 1 ? "!border-red-600" : ""
       }`}
       onClick={() => play()}
     >
@@ -106,7 +106,7 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
                 whileHover: { x: 16 },
               }}
               transition={{ type: "spring" }}
-              className="inline-block first:capitalize"
+              className="inline-block first:capitalize font-belanosima"
               key={i}
             >
               {l}

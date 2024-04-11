@@ -43,15 +43,15 @@ export const BackgroundSlider = ({
             stiffness: 50,
           }}
           // exit={{x: 50,opacity: 0}}
-          className="flex flex-col items-start justify-start w-full h-auto gap-5 text-white lg:w-1/2 font-SpaceGrotesk"
+          className="flex flex-col items-start justify-start w-full h-auto gap-5 text-white lg:w-1/2 font-tiltNeon"
         >
           <h1
             transition={{ duration: 1 }}
-            className="text-5xl font-bold capitalize md:text-7xl"
+            className="text-5xl font-bold capitalize font-tiltNeon md:text-7xl"
           >
             <BubbleText value={data.companyName} />
           </h1>
-          <p className="w-full text-base font-medium tracking-wide md:text-lg md:w-1/2">
+          <p className="w-full text-base font-medium tracking-wide font-belanosima md:text-lg md:w-1/2">
             {data.desc}
           </p>
         </motion.div>
@@ -106,7 +106,7 @@ export const BackgroundSlider = ({
       {/* Progress Bar */}
       <div
         style={{ width: `${progressValue}%`, transformOrigin: "left" }}
-        className="absolute bottom-0 left-0 h-1 transition-all ease-out bg-red-600 duration-600 rounded-xl"
+        className="absolute left-0 h-1 transition-all ease-out bg-red-600 bottom-0.5 md:bottom-0 duration-600 rounded-xl"
       ></div>
     </>
   );
