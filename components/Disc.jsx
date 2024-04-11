@@ -79,7 +79,7 @@ const Disc = () => {
           <motion.img
             key={data.id}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 2, delay: 0.5,ease:"easeInOut" } }}
+            animate={{ opacity: 1, transition: { duration: 1, delay: 0.5,ease:"easeIn" } }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
             src={data.img}

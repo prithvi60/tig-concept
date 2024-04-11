@@ -5,6 +5,7 @@ import {
   useSpring,
   useTransform,
   useAnimate,
+  stagger,
 } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
@@ -42,35 +43,31 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
   };
 
   useEffect(() => {
-    // async () => {
     if (currentSlide === list.id - 1) {
-      // await animate(
-      //   "#initialTarget",
-      //   { x: -16 },
-      //   { type: "spring" },
-      //   { staggerChildren: 0.075 },
-      //   { delayChildren: 0.25 }
-      // );
-      // await animate("#finalTarget", { x: 16 }, { type: "spring" });
-      animate(
-        "#initialTarget",
-        { opacity: 1 },
-        { x: -16 },
-        { duration: 1 },
-        { type: "spring" },
-        { staggerChildren: 0.075 },
-       { delayChildren: 0.25 }
-      );
-      animate(
-        "#finalTarget",
-        { opacity: 1 },
-        { x: 16 },
-        { duration: 1 },
-        { type: "spring" }
-      );
+      const animation = async () => {
+        await animate(
+          scope.current,
+          { opacity: [0, 1], x: [0, -16] },
+          {
+            duration: 0.5,
+            type: "spring",
+            delay: stagger(0.25),
+          }
+        );
+        await animate(
+          "#Target",
+          { opacity: [0, 1], x: [0, 16] },
+          {
+            duration: 0.5,
+            type: "spring",
+            delay: stagger(0.25, { from: "first", ease: "linear" }),
+            stiffness: 100,
+          }
+        );
+      };
+      animation();
     }
-    // };
-  }, [animate, currentSlide, list]);
+  }, [animate, currentSlide, list, scope]);
 
   return (
     <motion.a
@@ -84,9 +81,9 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
       }`}
       onClick={() => play()}
     >
-      <div ref={scope}>
+      <div>
         <motion.span
-          id="initialTarget"
+          ref={scope}
           variants={{
             initial: { x: 0 },
             whileHover: { x: -16 },
@@ -103,7 +100,7 @@ export const HoverLink = ({ heading, imgSrc, href, currentSlide, list }) => {
         >
           {heading.split("").map((l, i) => (
             <motion.span
-              id="finalTarget"
+              id="Target"
               variants={{
                 initial: { x: 0 },
                 whileHover: { x: 16 },
