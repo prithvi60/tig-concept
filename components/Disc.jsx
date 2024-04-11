@@ -116,7 +116,7 @@ const Disc = () => {
             opacity: 0,
             transition: { duration: 1, delay: 0.5 },
           }}
-          className={`text-base lg:text-2xl xl:text-3xl text-white capitalize font-belanosima border-2 border-red-600 px-5 py-2 rounded-xl animate-pulse ${
+          className={`text-xl lg:text-3xl xl:text-4xl text-white capitalize font-belanosima border-2 border-red-600 px-5 py-2 rounded-xl ${
             !bgSound ? "block" : "hidden"
           }`}
         >

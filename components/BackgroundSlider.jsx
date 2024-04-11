@@ -47,7 +47,7 @@ export const BackgroundSlider = ({
         >
           <h1
             transition={{ duration: 1 }}
-            className="text-5xl font-bold capitalize font-tiltNeon md:text-7xl"
+            className="text-5xl font-extrabold capitalize font-tiltNeon md:text-7xl"
           >
             <BubbleText value={data.companyName} />
           </h1>
