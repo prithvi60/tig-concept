@@ -25,7 +25,7 @@ export const BackgroundSlider = ({
 
   return (
     <>
-      <div className="fixed flex flex-col items-start justify-between w-full h-auto gap-10 px-10 bottom-10 md:bottom-20 md:px-20 md:gap-2 md:flex-row place-content-center ">
+      <div className="fixed flex flex-col items-start justify-between w-full h-auto gap-5 px-10 bottom-20 md:bottom-20 md:px-20 md:gap-2 md:flex-row place-content-center ">
         {/* <AnimatePresence> */}
         <motion.div
           key={data.id}
@@ -67,7 +67,7 @@ export const BackgroundSlider = ({
             stiffness: 20,
           }}
           // className="grid grid-cols-2 gap-x-10 gap-y-5 md:gap-6 md:space-y-3 md:block w-[30%]"
-          className="space-y-3 grid grid-cols-2 md:block w-full md:w-[60%] lg:w-[20%] gap"
+          className="space-y-3 grid grid-cols-2 md:block w-full md:w-[60%] lg:w-[30%] gap"
         >
           {companies.map((list) => (
             <HoverLink

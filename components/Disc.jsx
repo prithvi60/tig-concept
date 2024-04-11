@@ -66,7 +66,7 @@ const Disc = () => {
   }, [mute, play, stop]);
 
   return (
-    <section className="relative z-20 flex flex-col items-center justify-center w-full h-screen space-y-3 overflow-hidden md:gap-6 xl:gap-14">
+    <section className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-14">
       <motion.div
         initial={{ opacity: 0, x: -600 }}
         animate={{ opacity: 1, x: 0 }}
@@ -116,7 +116,7 @@ const Disc = () => {
             opacity: 0,
             transition: { duration: 1, delay: 0.5 },
           }}
-          className={`text-base lg:text-2xl xl:text-4xl text-white capitalize font-belanosima border-2 border-red-600 px-5 py-2 rounded-xl animate-pulse ${
+          className={`text-base lg:text-2xl xl:text-3xl text-white capitalize font-belanosima border-2 border-red-600 px-5 py-2 rounded-xl animate-pulse ${
             !bgSound ? "block" : "hidden"
           }`}
         >
