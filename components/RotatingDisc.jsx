@@ -2,7 +2,13 @@ import Image from "next/image";
 import useSound from "use-sound";
 import { motion, AnimatePresence } from "framer-motion";
 
-export const RotatingDisc = ({ bgSound, setBgSound, setHide,setMute,mute }) => {
+export const RotatingDisc = ({
+  bgSound,
+  setBgSound,
+  setHide,
+  setMute,
+  mute,
+}) => {
   const [play] = useSound("https://ik.imagekit.io/webibee/dj-disc-sound.mp3", {
     volume: 0.06,
   });
@@ -148,7 +154,7 @@ export const RotatingDisc = ({ bgSound, setBgSound, setHide,setMute,mute }) => {
           animate={{ opacity: 1, rotate: "45deg" }}
           transition={{ duration: 3.5, delay: 2 }}
           exit={{ opacity: 0 }}
-          className={`w-[300px] h-[300px] md:w-[250px] md:h-[250px] xl:w-[350px] xl:h-[350px] overflow-hidden absolute cursor-pointer right-[320px] !z-50  ${
+          className={`w-[300px] h-[300px] md:w-[250px] md:h-[250px] xl:w-[350px] xl:h-[350px] overflow-hidden absolute cursor-pointer right-8 lg:right-[150px] xl:right-[250px] !z-50  ${
             bgSound && "-top-[245px] md:-top-[270px] xl:-top-[320px]"
           }
             `}
