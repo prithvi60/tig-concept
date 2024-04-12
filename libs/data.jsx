@@ -53,3 +53,14 @@ export const companyLists = [
     img: "/bg 2.png",
   },
 ];
+
+export const MouseOverImages = [
+  "/hover.png",
+  "/bg 1.png",
+  "/bg 2.png",
+  "/bg 3.png",
+  "/hover.png",
+  "/bg 1.png",
+  "/bg 2.png",
+  "/bg 3.png",
+];

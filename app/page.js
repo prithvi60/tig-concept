@@ -1,5 +1,4 @@
 import Disc from "@/components/Disc";
-import Loading from "@/components/Loading";
 
 export default function Home() {
   return (
