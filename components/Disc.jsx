@@ -14,18 +14,18 @@ const Disc = () => {
   const [bgSound, setBgSound] = useState(false);
   const [data, setData] = useState(companyLists[0]);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [dynamicRoute, setDynamicRoute] = useState(companies[0].title);
+  const [dynamicRoute, setDynamicRoute] = useState("");
   const [progressValue, setProgressValue] = useState(0);
-  const [mute, setMute] = useState(true);
-  const [hide, setHide] = useState(false);
+  // const [mute, setMute] = useState(true);
   const router = useRouter();
-  const [play, { stop }] = useSound(
-    "https://ik.imagekit.io/webibee/tig-intro.mp3",
-    {
-      volume: 0.04,
-      loop: true,
-    }
-  );
+
+  // const [play, { stop }] = useSound(
+  //   "https://ik.imagekit.io/webibee/tig-intro.mp3",
+  //   {
+  //     volume: 0.04,
+  //     loop: true,
+  //   }
+  // );
 
   useEffect(() => {
     if (bgSound === true) {
@@ -52,23 +52,26 @@ const Disc = () => {
     }
   }, [currentSlide, bgSound, data, progressValue]);
 
-  useEffect(() => {
-    if (mute) {
-      stop();
-    } else {
-      play();
-    }
-  }, [mute, play, stop]);
+  // useEffect(() => {
+  //   if (mute) {
+  //     stop();
+  //   } else {
+  //     play();
+  //   }
+  // }, [mute, play, stop]);
+
+  const handleDynamicRoute = (value) => {
+    setDynamicRoute(value);
+  };
 
   useEffect(() => {
-    window.addEventListener("wheel", (event) => {
-      event.preventDefault();
-      router.push(`/${dynamicRoute.toLowerCase()}`);
-      // setBgSound(!bgSound);
-    });
-    // window.removeEventListener("wheel", (event) => {
-    //   event.preventDefault();
-    // });
+    if (dynamicRoute !== "") {
+      window.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        router.push(`/${dynamicRoute.toLowerCase()}`);
+        setBgSound(true);
+      });
+    }
   }, [router, bgSound, dynamicRoute]);
 
   return (
@@ -76,6 +79,7 @@ const Disc = () => {
       className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-14"
       // className="w-full h-screen overflow-hidden"
     >
+      {/* Background image Fade out Effect
       <motion.div
         initial={{ opacity: 0, x: -600 }}
         animate={{ opacity: 1, x: 0 }}
@@ -99,88 +103,111 @@ const Disc = () => {
             className="object-cover object-center w-full h-full"
           />
         </AnimatePresence>
-      </motion.div>
+      </motion.div> */}
+      {/* Mouse Move Effect */}
       <MouseImageTrail
         renderImageBuffer={50}
         rotationRange={25}
         images={MouseOverImages}
         bgSound={bgSound}
       ></MouseImageTrail>
-      {/* {hide && ( */}
-      <AnimatePresence mode="popLayout">
-        <motion.h1
+
+      {/* Main Company Name */}
+      <AnimatePresence>
+        <motion.div
           initial={{ y: 150, opacity: 0 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ y: -150, opacity: 0, transition: { duration: 1 } }}
-          transition={{ duration: 1, ease: "backInOut" }}
-          className={`h-auto tracking-wide text-red-600 capitalize font-tiltNeon text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer ${
+          exit={{ y: -150, opacity: 0 }}
+          transition={{ duration: 1, ease: "backInOut", delay: 0.25 }}
+          className={`h-auto tracking-wide text-red-600 capitalize font-tiltNeon text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer px-4 ${
             !bgSound ? "block" : "hidden"
           }`}
         >
           <BubbleText value={"The Internet Generation"} />
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 my-10 md:mt-2">
             {companies.map((list) => (
               <button
                 key={list.id}
-                className={`text-base px-4 py-2 rounded-xl ${
+                className={`text-xs md:text-base px-4 py-2 rounded-xl ${
                   dynamicRoute === list.title
                     ? "bg-white text-red-600"
                     : "bg-red-600 text-white "
                 }`}
-                onClick={() => setDynamicRoute(list.title)}
+                onClick={() => handleDynamicRoute(list.title)}
               >
                 {list.title}
               </button>
             ))}
           </div>
-        </motion.h1>
+          {dynamicRoute === "" && (
+            // <AnimatePresence>
+              <motion.p
+                // layout
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                // exit={{ opacity: 0, y: -100 }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+                className="flex flex-col-reverse md:flex-row items-center justify-center md:gap-1.5 text-sm font-bold tracking-wide text-center text-white font-belanosima animate-pulse"
+              >
+                Click a company name to visit their website
+                <span>
+                  <Image
+                    src={"/pointing-up-hand.svg"}
+                    alt="play button"
+                    height={50}
+                    width={50}
+                    className="md:mt-3.5 animate-bounce"
+                  />
+                </span>
+              </motion.p>
+            // </AnimatePresence>
+          )}
+        </motion.div>
       </AnimatePresence>
-      {/* ) } */}
+
       {/* Disc Svg Component */}
       <RotatingDisc
         bgSound={bgSound}
         setBgSound={setBgSound}
-        setHide={setHide}
-        setMute={setMute}
-        mute={mute}
+        // setMute={setMute}
+        // mute={mute}
       />
       {/* Play Button */}
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          layout
-          initial={{ y: 150, opacity: 0 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 2, ease: "backInOut" }}
-          exit={{
-            y: -550,
-            scale: 0.5,
-            opacity: 0,
-            transition: { duration: 1, delay: 0.5 },
-          }}
-          className={`text-xl lg:text-3xl xl:text-4xl text-white capitalize font-belanosima px-5 py-2 animate-bounce ${
-            !bgSound ? "block" : "hidden"
-          }`}
-        >
-          <h3>use scroll down</h3>
-          <Image
-            src={"/down-arrow.svg"}
-            alt="down arrow"
-            height={30}
-            width={30}
-            className="mx-auto"
-          />
-        </motion.div>
-      </AnimatePresence>
-      {/* background slider will be triggered, after disc play button is clicked*/}
-
-      {bgSound && (
-        <BackgroundSlider
-          setMute={setMute}
-          mute={mute}
-          data={data}
-          currentSlide={currentSlide}
-          progressValue={progressValue}
-        />
+      {dynamicRoute === "" ? (
+        ""
+      ) : (
+        <AnimatePresence mode="sync">
+          <motion.div
+            layout
+            initial={{ y: 150, opacity: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1,
+              ease: "easeIn",
+              type: "spring",
+              bounce: 0.5,
+              stiffness: 100,
+            }}
+            exit={{
+              y: -550,
+              scale: 0.5,
+              opacity: 0,
+              transition: { duration: 1, delay: 0.5 },
+            }}
+            className={`text-base lg:text-2xl xl:text-3xl text-white capitalize font-belanosima px-5 py-2 mt-5 ${
+              !bgSound ? "block" : "hidden"
+            }`}
+          >
+            <h3>scroll down</h3>
+            <Image
+              src={"/pointing-down-hand.svg"}
+              alt="down arrow"
+              height={60}
+              width={60}
+              className="mx-auto animate-bounce"
+            />
+          </motion.div>
+        </AnimatePresence>
       )}
     </section>
   );
