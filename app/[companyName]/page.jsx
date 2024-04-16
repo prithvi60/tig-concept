@@ -8,7 +8,11 @@ const page = ({ params }) => {
     (val) => val.companyName.toLowerCase() === companyName
   );
   // console.log(value);
-  return <BackgroundSlider data={value[0]} />;
+  return (
+    <main>
+      <BackgroundSlider data={value[0]} />;
+    </main>
+  );
 };
 
 export default page;

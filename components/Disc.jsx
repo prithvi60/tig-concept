@@ -70,7 +70,7 @@ const Disc = () => {
         const touchMove = (moveEvent) => {
           const deltaY = moveEvent.touches[0].clientY - touchStartY;
           // console.log(deltaY);
-          if (deltaY < -50) {
+          if (deltaY < -80) {
             // console.log("swiped Down",);
             router.push(`/${dynamicRoute.toLowerCase()}`);
             setScrollDown(true);
@@ -81,7 +81,7 @@ const Disc = () => {
       }
     };
 
-    // Event Listener will be trigger when dynamicRoute state value isn't empty
+    // The event listener will be triggered only when the dynamic route's state value is not empty.
     if (dynamicRoute !== "") {
       window.addEventListener("wheel", handleDeskTopRoute);
       window.addEventListener("touchstart", handleTouchStart);
@@ -161,7 +161,6 @@ const Disc = () => {
       {/* Disc Svg Component */}
       <RotatingDisc
         scrollDown={scrollDown}
-        // setScrollDown={setScrollDown}
         dynamicRoute={dynamicRoute}
       />
       {/* Play Button */}
@@ -191,7 +190,7 @@ const Disc = () => {
             }`}
           >
             <h3 className="hidden text-center md:block">scroll down</h3>
-            <h3 className="block text-center md:hidden">swipe</h3>
+            <h3 className="block text-center md:hidden">swipe down</h3>
             <Image
               src={"/pointing-down-hand.svg"}
               alt="down arrow"

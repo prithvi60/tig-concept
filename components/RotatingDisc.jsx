@@ -3,15 +3,15 @@ import Image from "next/image";
 import useSound from "use-sound";
 import { motion, AnimatePresence } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
   const [mute, setMute] = useState(false);
   const [hide, setHide] = useState(false);
   const [play, { stop }] = useSound(
-    "https://ik.imagekit.io/webibee/tig-intro.mp3",
+    "https://ik.imagekit.io/webibee/technology-logo-.mp3",
     {
-      volume: 0.04,
+      volume: 0.06,
       loop: true,
     }
   );
@@ -49,10 +49,21 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
     exit: { rotate: "0deg" },
   };
 
+  // useEffect(() => {
+  //   if (mute) {
+  //     stop();
+  //   } else {
+  //     play();
+  //   }
+  // }, [mute, play, stop]);
+
   const handleClick = () => {
     if (mute === false) {
       play();
+    } else {
+      stop();
     }
+    setMute(true);
     setHide(true);
 
     // React Hot Toast
@@ -74,27 +85,27 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
   };
 
   const handleMute = () => {
-    play();
     setMute(false);
-  };
-
-  const handleUnMute = () => {
     stop();
+  };
+  
+  const handleUnMute = () => {
+    play();
     setMute(true);
   };
 
   return (
     // <section className="relative w-max h-[50vh] flex items-center justify-center ">
     <>
-      <AnimatePresence>
+      {/* <AnimatePresence> */}
         <motion.div
           // layout
           variants={discVariants}
           initial="hidden"
           animate="animate"
-          exit="hidden"
+          // exit="hidden"
           transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
-          className={`w-max h-[50vh] flex items-center justify-center top-0 `}
+          className={`w-max h-[50vh] flex items-center justify-center `}
         >
           <div className="relative flex items-center justify-center w-auto my-14">
             {/* Rotating disc */}
@@ -161,17 +172,17 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
             {/* </AnimatePresence> */}
           </div>
         </motion.div>
-      </AnimatePresence>
+      {/* </AnimatePresence> */}
       <Toaster position="top-center" reverseOrder="false" />
       {hide && (
         <div className="fixed flex items-center gap-6 text-lg right-3 top-16 animate-pulse md:top-5 md:right-8">
-          {!mute ? (
+          {mute ? (
             <Image
               src={"/mute-2-svgrepo-com.svg"}
               alt="pause button"
               height={30}
               width={30}
-              onClick={handleUnMute}
+              onClick={handleMute}
               className="cursor-pointer opacity-60 hover:opacity-100 hover:animate-pulse"
             />
           ) : (
@@ -180,7 +191,7 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
               alt="play button"
               height={30}
               width={30}
-              onClick={handleMute}
+              onClick={handleUnMute}
               className="cursor-pointer opacity-60 hover:opacity-100 hover:animate-pulse"
             />
           )}
