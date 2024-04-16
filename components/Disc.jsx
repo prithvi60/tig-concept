@@ -69,14 +69,15 @@ const Disc = () => {
         const touchStartY = event.touches[0].clientY;
         const touchMove = (moveEvent) => {
           const deltaY = moveEvent.touches[0].clientY - touchStartY;
-          if (deltaY > -100) {
-            // console.log("swiped Down");
+          // console.log(deltaY);
+          if (deltaY < -50) {
+            // console.log("swiped Down",);
             router.push(`/${dynamicRoute.toLowerCase()}`);
             setScrollDown(true);
-            window.removeEventListener("touchmove", touchMove);
+            document.removeEventListener("touchmove", touchMove);
           }
         };
-        window.addEventListener("touchmove", touchMove);
+        document.addEventListener("touchmove", touchMove);
       }
     };
 
