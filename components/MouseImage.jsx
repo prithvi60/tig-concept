@@ -37,7 +37,7 @@ export const MouseImageTrail = ({
   // images will be rotated at a random number between zero and rotationRange,
   // alternating between a positive and negative rotation
   rotationRange,
-  bgSound
+  scrollDown
 }) => {
   const [scope, animate] = useAnimate();
 
@@ -119,10 +119,10 @@ export const MouseImageTrail = ({
     <div
       ref={scope}
       // className={`relative flex flex-col items-center justify-center w-full space-y-3 h-dvh md:gap-6 xl:gap-14 ${
-      //   bgSound === false ? "block" : "hidden"
+      //   scrollDown === false ? "block" : "hidden"
       // }`}
       className={`fixed top-0 w-full h-screen overflow-hidden -z-10 ${
-        !bgSound ? "block" : "hidden"
+        !scrollDown ? "block" : "hidden"
       }`}
       onMouseMove={handleMouseMove}
     >

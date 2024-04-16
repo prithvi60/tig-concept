@@ -1,9 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { companies } from "@/libs/data";
 import { BubbleText } from "./BubbleText";
-import { HoverLink } from "./HoverLinks";
 import useSound from "use-sound";
 import { useEffect, useState } from "react";
 import SpecificPageDisc from "./SpecificPageDisc";
@@ -86,7 +84,7 @@ export const BackgroundSlider = ({
           className="fixed flex items-center justify-center w-full h-auto px-10 bottom-20 md:bottom-48 md:px-20 "
         >
           <motion.div
-            key={data.id}
+            key={data?.id}
             initial={{ x: -50, opacity: 0 }}
             animate={{
               x: 0,
@@ -107,10 +105,10 @@ export const BackgroundSlider = ({
               transition={{ duration: 1 }}
               className="w-full text-5xl font-extrabold text-center capitalize font-tiltNeon md:text-7xl"
             >
-              <BubbleText value={data.companyName} />
+              <BubbleText value={data?.companyName} />
             </h1>
             <p className="w-full mx-auto text-base font-medium tracking-wide text-center font-belanosima md:text-lg lg:w-1/2">
-              {data.desc}
+              {data?.desc}
             </p>
           </motion.div>
 

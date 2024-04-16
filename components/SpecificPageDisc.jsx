@@ -48,9 +48,9 @@ const SpecificPageDisc = ({setMute}) => {
   };
 
   const handleClick = () => {
-    // setBgSound(!bgSound);
+    // setScrollDown(!scrollDown);
     play();
-    router.push("/");
+    router.replace("/");
     setMute(true)
   };
 
