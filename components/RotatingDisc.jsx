@@ -173,7 +173,7 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
           </div>
         </motion.div>
       {/* </AnimatePresence> */}
-      <Toaster position="top-center" reverseOrder="false" />
+      <Toaster position="bottom-center" reverseOrder="false" />
       {hide && (
         <div className="fixed flex items-center gap-6 text-lg right-3 top-16 animate-pulse md:top-5 md:right-8">
           {mute ? (
