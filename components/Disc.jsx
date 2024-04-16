@@ -190,7 +190,7 @@ const Disc = () => {
             }`}
           >
             <h3 className="hidden text-center md:block">scroll down</h3>
-            <h3 className="block text-center md:hidden">swipe down</h3>
+            <h3 className="block text-center md:hidden">swipe up</h3>
             <Image
               src={"/pointing-down-hand.svg"}
               alt="down arrow"
