@@ -27,7 +27,7 @@ const SpecificPageDisc = ({setMute}) => {
       },
     },
     exit: {
-      y: -100,
+      y: 0,
       scale: 0.5,
       opacity: 0,
       // transition: {
@@ -44,7 +44,7 @@ const SpecificPageDisc = ({setMute}) => {
     animate: {
       rotate: "360deg",
     },
-    exit: { rotate: "0deg" },
+    // exit: { rotate: "0deg" },
   };
 
   const handleClick = () => {
@@ -55,13 +55,13 @@ const SpecificPageDisc = ({setMute}) => {
   };
 
   return (
-    <AnimatePresence>
+    // <AnimatePresence>
       <motion.div
-        layout
+        // layout
         variants={discVariants}
         initial="hidden"
         animate="animate"
-        exit="hidden"
+        // exit="hidden"
         // transition={{ duration: 2, delay: 0.5 }}
         className={`w-max h-[50vh] flex items-center justify-center ${
           !hide ? "fixed -top-28" : "top-0"
@@ -79,7 +79,7 @@ const SpecificPageDisc = ({setMute}) => {
                 duration: 1.5,
                 ease: "easeOut",
               }}
-              exit={"exit"}
+              // exit={"exit"}
               // whileHover={{
               //   scale: 1.1,
               //   transition: {
@@ -116,7 +116,7 @@ const SpecificPageDisc = ({setMute}) => {
             // exit={{ opacity: 0 }}
             className={`w-[200px] h-[200px] md:w-[250px] md:h-[250px] xl:w-[350px] xl:h-[350px] overflow-hidden absolute  !z-50 ${
               !hide
-                ? "-top-[11rem] -right-[17rem] md:-right-[22rem] xl:-top-64  xl:-right-[30rem]"
+                ? "-top-[10rem] -right-[18rem] md:-right-[22rem] xl:-top-64  xl:-right-[30rem]"
                 : "top-10 -right-36 md:-right-48 xl:-right-[17rem]"
             }
             `}
@@ -133,7 +133,7 @@ const SpecificPageDisc = ({setMute}) => {
           {/* </AnimatePresence> */}
         </div>
       </motion.div>
-    </AnimatePresence>
+    // </AnimatePresence>
   );
 };
 

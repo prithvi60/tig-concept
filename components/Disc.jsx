@@ -69,15 +69,14 @@ const Disc = () => {
         const touchStartY = event.touches[0].clientY;
         const touchMove = (moveEvent) => {
           const deltaY = moveEvent.touches[0].clientY - touchStartY;
-          console.log(deltaY);
           if (deltaY > -100) {
             // console.log("swiped Down");
             router.push(`/${dynamicRoute.toLowerCase()}`);
             setScrollDown(true);
-            document.removeEventListener("touchmove", touchMove);
+            window.removeEventListener("touchmove", touchMove);
           }
         };
-        document.addEventListener("touchmove", touchMove);
+        window.addEventListener("touchmove", touchMove);
       }
     };
 
@@ -96,10 +95,7 @@ const Disc = () => {
   }, [router, scrollDown, dynamicRoute]);
 
   return (
-    <section
-      className="relative z-20 flex flex-col items-center justify-center w-full h-screen space-y-3 overflow-hidden md:gap-6 xl:gap-8"
-      // onTouchStart={handleTouchStart}
-    >
+    <section className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-8">
       {/* Mouse Move Effect */}
       <MouseImageTrail
         renderImageBuffer={50}
@@ -120,7 +116,7 @@ const Disc = () => {
           }`}
         >
           <BubbleText value={"The Internet Generation"} />
-          <div className="flex flex-wrap items-center justify-center gap-4 my-10 md:my-2">
+          <div className="flex flex-wrap items-center justify-center gap-4 mt-10 mb-3 md:my-2">
             {companies.map((list) => (
               <button
                 key={list.id}
@@ -171,7 +167,7 @@ const Disc = () => {
       {dynamicRoute === "" ? (
         ""
       ) : (
-        <AnimatePresence mode="sync">
+        <AnimatePresence mode="popLayout">
           <motion.div
             layout
             initial={{ y: 150, opacity: 0 }}
@@ -193,7 +189,8 @@ const Disc = () => {
               !scrollDown ? "block" : "hidden"
             }`}
           >
-            <h3>scroll down</h3>
+            <h3 className="hidden text-center md:block">scroll down</h3>
+            <h3 className="block text-center md:hidden">swipe</h3>
             <Image
               src={"/pointing-down-hand.svg"}
               alt="down arrow"
