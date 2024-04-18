@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation";
 import { useScrollDirection } from "react-use-scroll-direction";
 const Disc = () => {
   const [scrollDown, setScrollDown] = useState(false);
+  const [rotation, setRotation] = useState(0);
+
   const [data, setData] = useState(companyLists[0]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [dynamicRoute, setDynamicRoute] = useState("");
@@ -94,9 +96,9 @@ const Disc = () => {
     };
     // console.log(dynamicRoute);
   }, [router, scrollDown, dynamicRoute]);
-
+  // chnage url state based on rotate [ 90 , 180 , 270,360 ] with offset
   return (
-    <section className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-8">
+    <section className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-8 select-none">
       {/* Mouse Move Effect */}
       <MouseImageTrail
         renderImageBuffer={50}
@@ -126,7 +128,27 @@ const Disc = () => {
                     ? "bg-white text-red-600"
                     : "bg-red-600 text-white "
                 }`}
-                onClick={() => handleDynamicRoute(list.title)}
+                onClick={() => {
+                  handleDynamicRoute(list.title);
+                  let rotationValue = 0;
+                  switch (list.id) {
+                    case 1:
+                      rotationValue = 90;
+                      break;
+                    case 2:
+                      rotationValue = 180;
+                      break;
+                    case 3:
+                      rotationValue = 270;
+                      break;
+                    case 4:
+                      rotationValue = 360;
+                      break;
+                    default:
+                      rotationValue = 0;
+                  }
+                  setRotation(rotationValue);
+                }}
               >
                 {list.title}
               </button>
@@ -162,7 +184,12 @@ const Disc = () => {
       <RotatingDisc
         scrollDown={scrollDown}
         dynamicRoute={dynamicRoute}
+        companies={companies}
+        handleDynamicRoute={handleDynamicRoute}
+        rotation={rotation}
+        setRotation={setRotation}
       />
+      {/* <NewDisc/> */}
       {/* Play Button */}
       {dynamicRoute === "" ? (
         ""

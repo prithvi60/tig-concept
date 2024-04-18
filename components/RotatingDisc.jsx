@@ -6,12 +6,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useRef, useState } from "react";
 
-export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
+export const RotatingDisc = ({
+  scrollDown,
+  dynamicRoute,
+  companies,
+  handleDynamicRoute,
+  rotation,
+  setRotation,
+}) => {
   const [rotateGesure, setRotateGesture] = useState(false);
   const rotateBtnRef = useRef(null);
   const [origin, setOrigin] = useState();
   const [mouseOldPos, setMouseOldPos] = useState();
-  const [rotation, setRotation] = useState(0);
   const imgRef = useRef(null);
   const [mute, setMute] = useState(false);
   const [hide, setHide] = useState(false);
@@ -92,9 +98,29 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
       y: origin.y - mouseOldPos.y,
     });
     const delta = angle2 - angle1;
-    setRotation(rotation + delta);
-  };
+    let newRotation = rotation + delta;
+    // console.log("rotate",newRotation,rotation , delta)
 
+    if (newRotation >= 360) {
+      newRotation -= 360;
+    } else if (newRotation < 0) {
+      newRotation += 360;
+    }
+    setRotation(newRotation);
+  };
+  // Links based on Rotate
+  useEffect(() => {
+    // console.log("rotate", rotation);
+    if (rotation > 0 && rotation <= 90) {
+      handleDynamicRoute(companies[0].title);
+    } else if (rotation > 90 && rotation <= 180) {
+      handleDynamicRoute(companies[1].title);
+    } else if (rotation > 180 && rotation <= 270) {
+      handleDynamicRoute(companies[2].title);
+    } else {
+      handleDynamicRoute(companies[3].title);
+    }
+  }, [companies, handleDynamicRoute, rotation]);
   const onMouseMove = (event) => {
     const flags = event.buttons !== undefined ? event.buttons : event.which;
     const primaryMouseButtonDown = (flags & 1) === 1;
@@ -134,6 +160,17 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
 
   return (
     <>
+      <motion.button
+         initial={{ y: 150, opacity: 0 }}
+         animate={{ opacity: 1, y: 0 }}
+         exit={{ y: -150, opacity: 0 }}
+         transition={{ duration: 1, ease: "backInOut", delay: 0.25 }}
+        className="bg-white text-black px-8 py-2 rounded-md hover:text-red-600 font-extrabold"
+        onClick={() => setRotation((o) => (o + 90) % 360)}
+      >
+        {" "}
+        Change brand
+      </motion.button>
       {/* <AnimatePresence> */}
       <motion.div
         // layout
@@ -145,10 +182,10 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
         className={`w-max h-[50vh] flex items-center justify-center `}
         onMouseMove={onMouseMove}
       >
-        <div className="relative flex items-center justify-center w-full my-14">
+        <div className="relative flex items-center justify-center w-full my-14 p-8">
           {/* Rotating disc */}
           <div
-            className={`relative w-[280px] h-[280px] md:w-[350px] md:h-[350px] xl:w-[450px] xl:h-[450px] overflow-hidden cursor-pointer  ${
+            className={`relative w-[280px] h-[280px] md:w-[350px] md:h-[350px] xl:w-[450px] xl:h-[450px] overflow-hidden cursor-pointer pointer-events-none ${
               scrollDown &&
               "absolute -top-[245px] md:-top-[250px] xl:-top-[320px]"
             }
@@ -161,8 +198,14 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
               ref={imgRef}
               src={"/disc1.png"}
               alt="rotating_disc_svg"
-              className="relative object-contain w-full h-full"
+              className="relative object-contain w-full h-full select-none pointer-events-none"
             />
+            {/* <div
+            className="bg-white shadow-lg p-2 absolute left-8  top-64 -translate-x-1/2 translate-y-1/2 rounded-full"
+            ref={rotateBtnRef}
+          >
+          X
+          </div> */}
             <div
               ref={rotateBtnRef}
               className="absolute w-16 h-16 top-7 left-48 "
@@ -194,12 +237,14 @@ export const RotatingDisc = ({ scrollDown, dynamicRoute }) => {
               priority
               src={"/Tone_arm.png"}
               alt="rotating_disc_svg"
-              className="object-contain"
+              className="object-contain select-none pointer-events-none"
             />
           </motion.div>
+
           {/* </AnimatePresence> */}
         </div>
       </motion.div>
+
       {/* </AnimatePresence> */}
       <Toaster position="bottom-center" reverseOrder="false" />
       {hide && (
