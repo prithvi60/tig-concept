@@ -208,7 +208,38 @@ export const RotatingDisc = ({
           </div> */}
             <div
               ref={rotateBtnRef}
-              className="absolute w-16 h-16 top-7 left-48 "
+              className="absolute w-16 h-16 top-2 left-36 "
+            >
+              <img
+                src="/hover.png"
+                alt="image 1"
+                className="w-full h-full rounded-2xl"
+              />
+            </div>
+            <div
+              ref={rotateBtnRef}
+              className="absolute w-16 h-16 bottom-2 left-36 "
+            >
+              <img
+                src="/hover.png"
+                alt="image 1"
+                className="w-full h-full rounded-2xl"
+              />
+            </div>
+  
+            <div
+              ref={rotateBtnRef}
+              className="absolute w-16 h-16 top-36 left-4 "
+            >
+              <img
+                src="/hover.png"
+                alt="image 1"
+                className="w-full h-full rounded-2xl"
+              />
+            </div>
+            <div
+              ref={rotateBtnRef}
+              className="absolute w-16 h-16 top-36 right-4 "
             >
               <img
                 src="/hover.png"
