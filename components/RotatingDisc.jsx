@@ -150,6 +150,41 @@ export const RotatingDisc = ({
     }
   };
 
+  const onTouchMove = (event) => {
+    // Get the touch position relative to the viewport
+    const touchX = event.touches[0].clientX;
+    const touchY = event.touches[0].clientY;
+    const flags = 1; // Simulate the left mouse button being pressed for touch devices
+
+    const primaryTouchDown = (flags & 1) === 1;
+    const insideRotate = isPointInsideElement(
+      {
+        x: touchX,
+        y: touchY,
+      },
+      rotateBtnRef.current
+    );
+
+    // Prevent the default behavior to avoid scrolling
+    event.preventDefault();
+
+    setMouseOldPos({ x: touchX, y: touchY });
+
+    if (primaryTouchDown) {
+      if (rotateGesure) {
+        handleRotate({ mouseViewportX: touchX, mouseViewportY: touchY });
+        return;
+      }
+
+      if (insideRotate) {
+        setRotateGesture(true);
+        return;
+      }
+    } else {
+      setRotateGesture(false);
+    }
+  };
+
   useEffect(() => {
     const rect = imgRef.current.getBoundingClientRect();
     setOrigin({
@@ -161,10 +196,10 @@ export const RotatingDisc = ({
   return (
     <>
       <motion.button
-         initial={{ y: 150, opacity: 0 }}
-         animate={{ opacity: 1, y: 0 }}
-         exit={{ y: -150, opacity: 0 }}
-         transition={{ duration: 1, ease: "backInOut", delay: 0.25 }}
+        initial={{ y: 150, opacity: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ y: -150, opacity: 0 }}
+        transition={{ duration: 1, ease: "backInOut", delay: 0.25 }}
         className="bg-white text-black px-8 py-2 rounded-md hover:text-red-600 font-extrabold"
         onClick={() => setRotation((o) => (o + 90) % 360)}
       >
@@ -181,6 +216,7 @@ export const RotatingDisc = ({
         transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
         className={`w-max h-[50vh] flex items-center justify-center `}
         onMouseMove={onMouseMove}
+        onTouchMove={onTouchMove}
       >
         <div className="relative flex items-center justify-center w-full my-14 p-8">
           {/* Rotating disc */}
@@ -226,7 +262,7 @@ export const RotatingDisc = ({
                 className="w-full h-full rounded-2xl"
               />
             </div>
-  
+
             <div
               ref={rotateBtnRef}
               className="absolute w-16 h-16 top-36 left-4 "
