@@ -98,7 +98,13 @@ const Disc = () => {
   }, [router, scrollDown, dynamicRoute]);
   // chnage url state based on rotate [ 90 , 180 , 270,360 ] with offset
   return (
-    <section className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-8 select-none">
+    <section
+      style={{
+        background:
+          "linear-gradient(to bottom right, #090101 30%, #793122 65%, #090101 90% )",
+      }}
+      className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-8 select-none"
+    >
       {/* Mouse Move Effect */}
       <MouseImageTrail
         renderImageBuffer={50}

@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-export const BubbleText = ({value}) => {
+export const BubbleText = ({ value }) => {
   return (
     <div className="h-16 text-5xl font-thin text-center text-white">
       {`${value}`.split("").map((child, idx) => (
@@ -9,5 +9,5 @@ export const BubbleText = ({value}) => {
         </span>
       ))}
     </div>
-  )
-}
+  );
+};

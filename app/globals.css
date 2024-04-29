@@ -38,3 +38,11 @@
 .hoverText:has(+ .hoverText + .hoverText:hover) {
   font-weight: 300;
 }
+
+/* Outline text effect CSS */
+
+.text_Outline {
+  -webkit-text-stroke: 2px white;
+} 
+
+/* background-image: linear-gradient(to bottom right, red 30%, yellow 50%,red ); */
