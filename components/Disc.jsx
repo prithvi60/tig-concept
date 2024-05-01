@@ -189,13 +189,15 @@ const Disc = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* 3D Disc Component */}
-      <div id="threed" className="bg-red-600 w-screen h-screen">
+      {/* 3D Disc Component makwe responsive */}
+      <div id="threed" className=" w-screen h-screen">
         <Canvas>
+        <Suspense fallback={<div>Loading....</div>}>
           <ambientLight />
           <OrbitControls enableZoom={false}/>
           <pointLight position={[10, 10, 10]} />
-          <DiscThree position={[0, 0, -1]} />
+          <DiscThree position={[0, 0, -10]} />
+          </Suspense>
         </Canvas>
       </div>
       {/* <RotatingDisc
