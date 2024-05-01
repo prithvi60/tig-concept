@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import useSound from "use-sound";
@@ -10,6 +10,9 @@ import { RotatingDisc } from "./RotatingDisc";
 import { MouseImageTrail } from "./MouseImage";
 import { useRouter } from "next/navigation";
 import { useScrollDirection } from "react-use-scroll-direction";
+import DiscThree from "./DiscThree";
+import { OrbitControls } from '@react-three/drei';
+import { Canvas, useFrame } from "@react-three/fiber";
 const Disc = () => {
   const [scrollDown, setScrollDown] = useState(false);
   const [rotation, setRotation] = useState(0);
@@ -186,15 +189,23 @@ const Disc = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Disc Svg Component */}
-      <RotatingDisc
+      {/* 3D Disc Component */}
+      <div id="threed" className="bg-red-600 w-screen h-screen">
+        <Canvas>
+          <ambientLight />
+          <OrbitControls enableZoom={false}/>
+          <pointLight position={[10, 10, 10]} />
+          <DiscThree position={[0, 0, -1]} />
+        </Canvas>
+      </div>
+      {/* <RotatingDisc
         scrollDown={scrollDown}
         dynamicRoute={dynamicRoute}
         companies={companies}
         handleDynamicRoute={handleDynamicRoute}
         rotation={rotation}
         setRotation={setRotation}
-      />
+      /> */}
       {/* <NewDisc/> */}
       {/* Play Button */}
       {dynamicRoute === "" ? (
