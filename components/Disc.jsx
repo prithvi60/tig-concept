@@ -192,9 +192,9 @@ const Disc = () => {
       {/* 3D Disc Component makwe responsive */}
       <div id="threed" className=" w-screen h-screen">
         <Canvas>
-        <Suspense fallback={<div>Loading....</div>}>
+        <Suspense fallback={null}>
           <ambientLight />
-          <OrbitControls enableZoom={false}/>
+          <OrbitControls enableZoom={false} enablePan={false} enableRotate={true}/>
           <pointLight position={[10, 10, 10]} />
           <DiscThree position={[0, 0, -10]} />
           </Suspense>
