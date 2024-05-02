@@ -8,9 +8,41 @@ const DiscThree = (props) => {
 
   return (
     <group ref={groupRef} {...props} dispose={null}>
-      <group 
-     scale={[2, 2, 2]}
-      >
+      {/* disc 1 */}
+      <group scale={[0.1, 0.1, 0.1]} position={[0, -12, 0]}>
+        <mesh
+          castShadow={true}
+          receiveShadow={true}
+          geometry={nodes.VinylRecord3_VinylRecord3_0.geometry}
+          material={materials.VinylRecord3}
+          rotation={[-0.357, 0.1, 0.984]}
+        />
+      </group>
+      {/* disc 2 */}
+
+      <group scale={[0.1, 0.1, 0.1]} position={[0, -8, 0]}>
+        <mesh
+          castShadow={true}
+          receiveShadow={true}
+          geometry={nodes.VinylRecord3_VinylRecord3_0.geometry}
+          material={materials.VinylRecord3}
+          rotation={[-0.357, 0.1, 0.984]}
+        />
+      </group>
+      {/* disc 3 */}
+
+      <group scale={[0.1, 0.1, 0.1]} position={[0, -4, 0]}>
+        <mesh
+          castShadow={true}
+          receiveShadow={true}
+          geometry={nodes.VinylRecord3_VinylRecord3_0.geometry}
+          material={materials.VinylRecord3}
+          rotation={[-0.357, 0.1, 0.984]}
+        />
+      </group>
+      {/* disc 4 */}
+
+      <group scale={[0.1, 0.1, 0.1]} position={[0, 0, 0]}>
         <mesh
           castShadow={true}
           receiveShadow={true}

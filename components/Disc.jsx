@@ -1,22 +1,24 @@
 "use client";
 import React, { Suspense, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import useSound from "use-sound";
 import { useState } from "react";
 import { MouseOverImages, companies, companyLists } from "@/libs/data";
 import { BubbleText } from "./BubbleText";
-import { RotatingDisc } from "./RotatingDisc";
 import { MouseImageTrail } from "./MouseImage";
 import { useRouter } from "next/navigation";
-import { useScrollDirection } from "react-use-scroll-direction";
-import DiscThree from "./DiscThree";
-import { OrbitControls } from '@react-three/drei';
+
 import { Canvas, useFrame } from "@react-three/fiber";
+import { Experience } from "./Experience";
+import { ScrollManager } from "./ScrollManager";
+import { Leva } from "leva";
+import { Scroll, ScrollControls } from "@react-three/drei";
+import { framerMotionConfig } from "@/app/config";
 const Disc = () => {
   const [scrollDown, setScrollDown] = useState(false);
   const [rotation, setRotation] = useState(0);
-
+  const [section, setSection] = useState(0);
   const [data, setData] = useState(companyLists[0]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [dynamicRoute, setDynamicRoute] = useState("");
@@ -31,6 +33,9 @@ const Disc = () => {
   //     loop: true,
   //   }
   // );
+  // useEffect(() => {
+  //   console.log("update sec", section);
+  // }, [section]);
 
   useEffect(() => {
     if (scrollDown === true) {
@@ -103,8 +108,18 @@ const Disc = () => {
   return (
     <section
       style={{
+        // background:
+        //   "linear-gradient(to bottom right, #090101 30%, #793122 65%, #090101 90% )",
         background:
-          "linear-gradient(to bottom right, #090101 30%, #793122 65%, #090101 90% )",
+          section === 0
+            ? "linear-gradient(to bottom right, #090101 30%, #793122 65%, #090101 90%)"
+            : section === 1
+            ? "linear-gradient(to bottom right, #ff0000, #00ff00)"
+            : section === 2
+            ? "linear-gradient(to bottom right, #0000ff, #ffff00)"
+            : section === 3
+            ? "linear-gradient(to bottom right, #ff00ff, #00ffff)"
+            : "initial",
       }}
       className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-8 select-none"
     >
@@ -191,15 +206,32 @@ const Disc = () => {
 
       {/* 3D Disc Component makwe responsive */}
       <div id="threed" className=" w-screen h-screen">
-        <Canvas>
-        <Suspense fallback={null}>
-          <ambientLight />
-          <OrbitControls enableZoom={false} enablePan={false} enableRotate={true}/>
-          <pointLight position={[10, 10, 10]} />
-          <DiscThree position={[0, 0, -10]} />
-          </Suspense>
-        </Canvas>
+        <MotionConfig
+          transition={{
+            ...framerMotionConfig,
+          }}
+        >
+          <Canvas
+            shadows
+            camera={{
+              position: [0, 0, 8],
+              fov: 30,
+            }}
+          >
+            <Experience section={section} setSection={setSection} />
+            {/* <ScrollControls pages={4} damping={0.1}>
+              <ScrollManager section={section} onSectionChange={setSection} />
+              <Scroll>
+              </Scroll>
+              {/* <Scroll html>
+              <Interface />
+            </Scroll> */}
+            {/* </ScrollControls> */}
+          </Canvas>
+        </MotionConfig>
+        <Leva hidden />
       </div>
+
       {/* <RotatingDisc
         scrollDown={scrollDown}
         dynamicRoute={dynamicRoute}
