@@ -70,6 +70,7 @@ export const Experience = (props) => {
           // scale={[1.2,1.2,1.2]}
         />
       </motion.group>
+  
     </>
   );
 };

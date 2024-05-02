@@ -17,7 +17,7 @@ import { Scroll, ScrollControls } from "@react-three/drei";
 import { framerMotionConfig } from "@/app/config";
 const Disc = () => {
   const [scrollDown, setScrollDown] = useState(false);
-  const [rotation, setRotation] = useState(0);
+  const [brand, setBrand] = useState("tigital");
   const [section, setSection] = useState(0);
   const [data, setData] = useState(companyLists[0]);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -104,7 +104,17 @@ const Disc = () => {
     };
     // console.log(dynamicRoute);
   }, [router, scrollDown, dynamicRoute]);
-  // chnage url state based on rotate [ 90 , 180 , 270,360 ] with offset
+  useEffect(() => {
+    section === 0
+      ? setBrand(`${companies[0].title.toLowerCase()}`)
+      : section === 1
+      ? setBrand(`${companies[1].title.toLowerCase()}`)
+      : section === 2
+      ? setBrand(`${companies[2].title.toLowerCase()}`)
+      : section === 3
+      ? setBrand(`${companies[3].title.toLowerCase()}`)
+      : setBrand(`${companies[0].title.toLowerCase()}`);
+  }, [section]);
   return (
     <section
       style={{
@@ -124,12 +134,12 @@ const Disc = () => {
       className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-8 select-none"
     >
       {/* Mouse Move Effect */}
-      <MouseImageTrail
+      {/* <MouseImageTrail
         renderImageBuffer={50}
         rotationRange={25}
         images={MouseOverImages}
         scrollDown={scrollDown}
-      ></MouseImageTrail>
+      ></MouseImageTrail> */}
 
       {/* Main Company Name */}
       <AnimatePresence>
@@ -138,48 +148,29 @@ const Disc = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ y: -150, opacity: 0 }}
           transition={{ duration: 1, ease: "backInOut", delay: 0.25 }}
-          className={`h-auto tracking-wide text-red-600 capitalize font-tiltNeon text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer px-4 ${
+          className={`mt-24 h-auto tracking-wide text-red-600 capitalize font-tiltNeon text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer px-4 ${
             !scrollDown ? "block" : "hidden"
           }`}
         >
           <BubbleText value={"The Internet Generation"} />
-          <div className="flex flex-wrap items-center justify-center gap-4 mt-10 mb-3 md:my-2">
-            {companies.map((list) => (
-              <button
-                key={list.id}
-                className={`text-xs md:text-base px-4 py-2 rounded-xl ${
-                  dynamicRoute === list.title
-                    ? "bg-white text-red-600"
-                    : "bg-red-600 text-white "
-                }`}
-                onClick={() => {
-                  handleDynamicRoute(list.title);
-                  let rotationValue = 0;
-                  switch (list.id) {
-                    case 1:
-                      rotationValue = 90;
-                      break;
-                    case 2:
-                      rotationValue = 180;
-                      break;
-                    case 3:
-                      rotationValue = 270;
-                      break;
-                    case 4:
-                      rotationValue = 360;
-                      break;
-                    default:
-                      rotationValue = 0;
-                  }
-                  setRotation(rotationValue);
-                }}
-              >
-                {list.title}
-              </button>
-            ))}
-          </div>
-          {dynamicRoute === "" && (
+          <p className="text-sm text-white">
+            Empower your brand with our dynamic digital marketing solutions.
+            From SEO to social media management, we drive results that elevate
+            your online presence. Let us amplify your digital footprint today.
+            Empower your brand with our dynamic digital marketing solutions.
+          </p>
+
+          <button
+            className={`text-xs md:text-base px-4 py-2 rounded-xl ${"bg-red-600 text-white capitalize"}`}
+            onClick={() => {
+              router.push(`/${brand}`);
+            }}
+          >
+            Visit {brand}
+          </button>
+          {/* {dynamicRoute === "" && (
             // <AnimatePresence>
+
             <motion.p
               // layout
               initial={{ opacity: 0, y: 100 }}
@@ -200,7 +191,7 @@ const Disc = () => {
               </span>
             </motion.p>
             // </AnimatePresence>
-          )}
+          )} */}
         </motion.div>
       </AnimatePresence>
 

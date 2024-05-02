@@ -52,19 +52,21 @@ export const ScrollManager = (props) => {
   //   // }
   //   lastScroll.current = data.scroll.current;
   // });
+
+  // scroll gitching in last disc
   useFrame(() => {
     if (isAnimating.current) {
       lastScroll.current = data.scroll.current;
       return;
     }
-  
+
     const curSection = Math.floor(data.scroll.current * data.pages);
-  
+
     if (curSection !== prevCurSection.current) {
       prevCurSection.current = curSection;
       onSectionChange(curSection);
     }
-  
+
     lastScroll.current = data.scroll.current;
   });
 
