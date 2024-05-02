@@ -1,22 +1,24 @@
 "use client";
 import React, { Suspense, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import useSound from "use-sound";
 import { useState } from "react";
 import { MouseOverImages, companies, companyLists } from "@/libs/data";
 import { BubbleText } from "./BubbleText";
-import { RotatingDisc } from "./RotatingDisc";
 import { MouseImageTrail } from "./MouseImage";
 import { useRouter } from "next/navigation";
-import { useScrollDirection } from "react-use-scroll-direction";
-import DiscThree from "./DiscThree";
-import { OrbitControls } from '@react-three/drei';
+
 import { Canvas, useFrame } from "@react-three/fiber";
+import { Experience } from "./Experience";
+import { ScrollManager } from "./ScrollManager";
+import { Leva } from "leva";
+import { Scroll, ScrollControls } from "@react-three/drei";
+import { framerMotionConfig } from "@/app/config";
 const Disc = () => {
   const [scrollDown, setScrollDown] = useState(false);
-  const [rotation, setRotation] = useState(0);
-
+  const [brand, setBrand] = useState("tigital");
+  const [section, setSection] = useState(0);
   const [data, setData] = useState(companyLists[0]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [dynamicRoute, setDynamicRoute] = useState("");
@@ -31,6 +33,9 @@ const Disc = () => {
   //     loop: true,
   //   }
   // );
+  // useEffect(() => {
+  //   console.log("update sec", section);
+  // }, [section]);
 
   useEffect(() => {
     if (scrollDown === true) {
@@ -99,22 +104,42 @@ const Disc = () => {
     };
     // console.log(dynamicRoute);
   }, [router, scrollDown, dynamicRoute]);
-  // chnage url state based on rotate [ 90 , 180 , 270,360 ] with offset
+  useEffect(() => {
+    section === 0
+      ? setBrand(`${companies[0].title.toLowerCase()}`)
+      : section === 1
+      ? setBrand(`${companies[1].title.toLowerCase()}`)
+      : section === 2
+      ? setBrand(`${companies[2].title.toLowerCase()}`)
+      : section === 3
+      ? setBrand(`${companies[3].title.toLowerCase()}`)
+      : setBrand(`${companies[0].title.toLowerCase()}`);
+  }, [section]);
   return (
     <section
       style={{
+        // background:
+        //   "linear-gradient(to bottom right, #090101 30%, #793122 65%, #090101 90% )",
         background:
-          "linear-gradient(to bottom right, #090101 30%, #793122 65%, #090101 90% )",
+          section === 0
+            ? "linear-gradient(to bottom right, #090101 30%, #793122 65%, #090101 90%)"
+            : section === 1
+            ? "linear-gradient(to bottom right, #ff0000, #00ff00)"
+            : section === 2
+            ? "linear-gradient(to bottom right, #0000ff, #ffff00)"
+            : section === 3
+            ? "linear-gradient(to bottom right, #ff00ff, #00ffff)"
+            : "initial",
       }}
       className="relative z-20 flex flex-col items-center justify-center w-full space-y-3 overflow-hidden h-dvh md:gap-6 xl:gap-8 select-none"
     >
       {/* Mouse Move Effect */}
-      <MouseImageTrail
+      {/* <MouseImageTrail
         renderImageBuffer={50}
         rotationRange={25}
         images={MouseOverImages}
         scrollDown={scrollDown}
-      ></MouseImageTrail>
+      ></MouseImageTrail> */}
 
       {/* Main Company Name */}
       <AnimatePresence>
@@ -123,48 +148,29 @@ const Disc = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ y: -150, opacity: 0 }}
           transition={{ duration: 1, ease: "backInOut", delay: 0.25 }}
-          className={`h-auto tracking-wide text-red-600 capitalize font-tiltNeon text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer px-4 ${
+          className={`mt-24 h-auto tracking-wide text-red-600 capitalize font-tiltNeon text-2xl md:text-4xl xl:text-6xl text-center cursor-pointer px-4 ${
             !scrollDown ? "block" : "hidden"
           }`}
         >
           <BubbleText value={"The Internet Generation"} />
-          <div className="flex flex-wrap items-center justify-center gap-4 mt-10 mb-3 md:my-2">
-            {companies.map((list) => (
-              <button
-                key={list.id}
-                className={`text-xs md:text-base px-4 py-2 rounded-xl ${
-                  dynamicRoute === list.title
-                    ? "bg-white text-red-600"
-                    : "bg-red-600 text-white "
-                }`}
-                onClick={() => {
-                  handleDynamicRoute(list.title);
-                  let rotationValue = 0;
-                  switch (list.id) {
-                    case 1:
-                      rotationValue = 90;
-                      break;
-                    case 2:
-                      rotationValue = 180;
-                      break;
-                    case 3:
-                      rotationValue = 270;
-                      break;
-                    case 4:
-                      rotationValue = 360;
-                      break;
-                    default:
-                      rotationValue = 0;
-                  }
-                  setRotation(rotationValue);
-                }}
-              >
-                {list.title}
-              </button>
-            ))}
-          </div>
-          {dynamicRoute === "" && (
+          <p className="text-sm text-white">
+            Empower your brand with our dynamic digital marketing solutions.
+            From SEO to social media management, we drive results that elevate
+            your online presence. Let us amplify your digital footprint today.
+            Empower your brand with our dynamic digital marketing solutions.
+          </p>
+
+          <button
+            className={`text-xs md:text-base px-4 py-2 rounded-xl ${"bg-red-600 text-white capitalize"}`}
+            onClick={() => {
+              router.push(`/${brand}`);
+            }}
+          >
+            Visit {brand}
+          </button>
+          {/* {dynamicRoute === "" && (
             // <AnimatePresence>
+
             <motion.p
               // layout
               initial={{ opacity: 0, y: 100 }}
@@ -185,21 +191,38 @@ const Disc = () => {
               </span>
             </motion.p>
             // </AnimatePresence>
-          )}
+          )} */}
         </motion.div>
       </AnimatePresence>
 
       {/* 3D Disc Component makwe responsive */}
       <div id="threed" className=" w-screen h-screen">
-        <Canvas>
-        <Suspense fallback={null}>
-          <ambientLight />
-          <OrbitControls enableZoom={false} enablePan={false} enableRotate={true}/>
-          <pointLight position={[10, 10, 10]} />
-          <DiscThree position={[0, 0, -10]} />
-          </Suspense>
-        </Canvas>
+        <MotionConfig
+          transition={{
+            ...framerMotionConfig,
+          }}
+        >
+          <Canvas
+            shadows
+            camera={{
+              position: [0, 0, 8],
+              fov: 30,
+            }}
+          >
+            <Experience section={section} setSection={setSection} />
+            {/* <ScrollControls pages={4} damping={0.1}>
+              <ScrollManager section={section} onSectionChange={setSection} />
+              <Scroll>
+              </Scroll>
+              {/* <Scroll html>
+              <Interface />
+            </Scroll> */}
+            {/* </ScrollControls> */}
+          </Canvas>
+        </MotionConfig>
+        <Leva hidden />
       </div>
+
       {/* <RotatingDisc
         scrollDown={scrollDown}
         dynamicRoute={dynamicRoute}
