@@ -26,27 +26,27 @@ const Disc = () => {
   // const [mute, setMute] = useState(true);
   const router = useRouter();
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [cursorPositionForMobile, setCursorPositionForMobile] = useState({
-    x: 0,
-    y: 0,
-  });
+  // const [cursorPositionForMobile, setCursorPositionForMobile] = useState({
+  //   x: 0,
+  //   y: 0,
+  // });
 
   // shadow cursor Effect
   useEffect(() => {
     const handleMouseMove = (event) => {
       setCursorPosition({ x: event.clientX, y: event.clientY });
     };
-    const handleTouchMove = (event) => {
-      const touch = event.touches[0];
-      setCursorPositionForMobile({ x: touch.clientX, y: touch.clientY });
-    };
+    // const handleTouchMove = (event) => {
+    //   const touch = event.touches[0];
+    //   setCursorPositionForMobile({ x: touch.clientX, y: touch.clientY });
+    // };
 
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleTouchMove);
+    // window.addEventListener("touchmove", handleTouchMove);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
+      // window.removeEventListener("touchmove", handleTouchMove);
     };
   }, []);
 
@@ -173,8 +173,8 @@ const Disc = () => {
         animate={{ opacity: 0.3 }}
         transition={{ duration: 1.2, delay: 0.5, ease: "backOut" }}
         style={{
-          top: cursorPosition.y || cursorPositionForMobile.y,
-          left: cursorPosition.x || cursorPositionForMobile.x,
+          top: cursorPosition.y ,
+          left: cursorPosition.x ,
         }}
         className="absolute -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-36 h-36 md:w-72 md:h-72 opacity-20 blur-md -z-10"
       ></motion.div>
