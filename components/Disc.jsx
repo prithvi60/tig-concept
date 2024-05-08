@@ -25,7 +25,7 @@ const Disc = () => {
   const [progressValue, setProgressValue] = useState(0);
   // const [mute, setMute] = useState(true);
   const router = useRouter();
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: -200, y: -200 });
   // const [cursorPositionForMobile, setCursorPositionForMobile] = useState({
   //   x: 0,
   //   y: 0,
@@ -131,14 +131,14 @@ const Disc = () => {
 
   useEffect(() => {
     section === 0
-    ? setBrand(`${companies[0].title.toLowerCase()}`)
-    : section === 1
-    ? setBrand(`${companies[1].title.toLowerCase()}`)
-    : section === 2
-    ? setBrand(`${companies[2].title.toLowerCase()}`)
-    : section === 3
-    ? setBrand(`${companies[3].title.toLowerCase()}`)
-    : setBrand(`${companies[0].title.toLowerCase()}`);
+      ? setBrand(`${companies[0].title.toLowerCase()}`)
+      : section === 1
+      ? setBrand(`${companies[1].title.toLowerCase()}`)
+      : section === 2
+      ? setBrand(`${companies[2].title.toLowerCase()}`)
+      : section === 3
+      ? setBrand(`${companies[3].title.toLowerCase()}`)
+      : setBrand(`${companies[0].title.toLowerCase()}`);
   }, [section]);
 
   return (
@@ -171,10 +171,16 @@ const Disc = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.3 }}
-        transition={{ duration: 1.2, delay: 0.5, ease: "backOut" }}
+        transition={{
+          duration: 1.2,
+          ease: "backOut",
+          type: "spring",
+          stiffness: 250,
+          bounce: 0.8,
+        }}
         style={{
-          top: cursorPosition.y ,
-          left: cursorPosition.x ,
+          top: cursorPosition.y,
+          left: cursorPosition.x,
         }}
         className="absolute -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-36 h-36 md:w-72 md:h-72 opacity-20 blur-md -z-10"
       ></motion.div>
@@ -202,12 +208,17 @@ const Disc = () => {
             your online presence. Let us amplify your digital footprint today.
             Empower your brand with our dynamic digital marketing solutions.
           </p>
-
           <motion.button
             key={section}
-            initial={{ scale: 1.4, opacity: 0 }}
+            // layout
+            initial={{ scale: 2, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.2, ease: "easeInOut", type: "spring", stiffness: 200 }}
+            transition={{
+              duration: 1.2,
+              ease: "easeInOut",
+              type: "spring",
+              stiffness: 200,
+            }}
             onClick={() => {
               router.push(`/${brand}`);
             }}
@@ -247,7 +258,7 @@ const Disc = () => {
       </AnimatePresence>
 
       {/* 3D Disc Component makwe responsive */}
-      <div id="threed" className="w-screen h-screen ">
+      {/* <div id="threed" className="w-screen h-screen ">
         <MotionConfig
           transition={{
             ...framerMotionConfig,
@@ -264,7 +275,7 @@ const Disc = () => {
           </Canvas>
         </MotionConfig>
         <Leva hidden />
-      </div>
+      </div> */}
 
       {/* <RotatingDisc
         scrollDown={scrollDown}
